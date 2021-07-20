@@ -13,6 +13,7 @@ amqp.connect('amqp://localhost', (err, connection) => {
 		const msg = process.argv.slice(2).join(' ') || 'Hello World!'
 
 		// Exchange is middleman that responsible for forwarding msg to the queue
+		// `fanout` type broadcasts all the messages it receives to all the queues it knows
 		channel.assertExchange(exchange, 'fanout', { durable: false })
 		channel.publish(exchange, '', Buffer.from(msg))
 		console.log(' [x] Sent %s', msg)
